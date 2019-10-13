@@ -38,6 +38,8 @@ https://movie.douban.com/j/new_search_subjects?sort=U&range=0,10&tags=&start=0&y
 # GitHub 和源码
 [-->GitHub地址](https://github.com/lujingtao/Douban-movies-spider-by-nodeJs)
 
+下载后先执行 `npm i` 安装模块，然后执行 `node app.js`
+
 nodejs源码：
 ```js
 var cheerio = require('cheerio');
