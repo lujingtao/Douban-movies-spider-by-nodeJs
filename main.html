@@ -1,0 +1,69 @@
+<html>
+<head>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+
+<style>
+    *{margin:0; padding:0;}
+    body{padding:20px; line-height:2}
+    input[type=text]{padding:5px; width:60px; border:1px solid #ccc;}
+    input[type=button]{padding:5px; width:90px; }
+    .list{overflow:hidden; font-size: 14px; list-style: none}
+    .list li{float:left; height: 270px; width: 150px; margin:0 30px 0 0; list-style: none; text-align: center;}
+    .list .pic img{width:100%; height:210px}
+    .list .other{font-size:12px;}
+    .list .other span{color:#f00}
+
+</style>
+
+<body>
+    <h3>豆瓣电影爬虫</h3>
+    <form method="post">
+        年份：<input type="text" id="year" value="2018"/>
+        &nbsp;&nbsp;
+        最低评分：<input type="text" id="minRange" value="9.0"/>
+        &nbsp;&nbsp;
+        最高评分：<input type="text" id="maxRange" value="10"/>
+        &nbsp;&nbsp;
+        最低评分人数：<input type="text" id="peoples" value="10000"/>
+        &nbsp;&nbsp;
+        <input type="button" value=" 提交 " id="submit">
+    </form>
+    <br/>
+    <h3>筛选结果：</h3>
+    <ul class="list">
+
+    </ul>
+</body>
+
+<script>
+    //获取后台反馈数据并提示信息
+    var afterLogin=function(data,status){
+        if (status=='success'){
+            $(".list").html("");
+            data.forEach(e => {
+                $(".list").append('<li><div class="pic"><a target="_blank" href="'+e.url+'"><img src="'+e.cover+'"/></a></div><div class="title">'+e.title+'</div><div class="other">评分<span>'+e.rate+'</span> 人数<span>'+e.peoples+'</span><div></li>')
+            });
+        }else {
+            
+        }
+    }
+
+    //前提点击提交
+    $("#submit").click(function(){
+        var minRange    =   $("#minRange").val() ;
+        var maxRange    =   $("#maxRange").val() ;
+        var peoples    =   $("#peoples").val() ;
+        var year    =   $("#year").val() ;
+
+        $.post('http://127.0.0.1:3000/action',{
+                minRange:minRange ,
+                maxRange:maxRange ,
+                peoples:peoples ,
+                year:year ,
+            },afterLogin
+        );
+
+    });
+</script>
+</html>
